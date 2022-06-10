@@ -7,7 +7,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
 
-public class GoLiveMovieRepository implements MovieRepositoryInterface {
+public class FileMovieRepository implements MovieRepositoryInterface {
     public void add(Movie movie) {
         try {
             Writer output;
