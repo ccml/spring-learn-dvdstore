@@ -25,9 +25,11 @@ public class FileMovieRepository implements MovieRepositoryInterface {
 
     public void add(Movie movie) {
         try {
+            long lastId=list().stream().map(Movie::getId).max(Long::compare).orElse(0L);
+            movie.setId(lastId+1);
             Writer output;
             output = new BufferedWriter(new FileWriter(file, true));
-            output.append(movie.getTitle() + ";" + movie.getGenre() + "\n");
+            output.append(movie.getId() + ";" + movie.getTitle() + ";" + movie.getGenre() + ";" + movie.getDescription() + "\n");
             output.flush();
             output.close();
         } catch (IOException e) {
