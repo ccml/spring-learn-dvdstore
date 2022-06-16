@@ -1,6 +1,11 @@
 package com.mycompany.dvdstore.core.entity;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Table;
+
+@Table("MOVIE")
 public class Movie {
+    @Id
     private Long id;
     private String title;
     private String genre;

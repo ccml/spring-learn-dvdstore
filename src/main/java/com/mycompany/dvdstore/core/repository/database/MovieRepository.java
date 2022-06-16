@@ -1,3 +1,4 @@
+/*
 package com.mycompany.dvdstore.core.repository.database;
 
 import com.mycompany.dvdstore.core.entity.Movie;
@@ -54,3 +55,4 @@ public class MovieRepository implements MovieRepositoryInterface {
         return movie;
     }
 }
+*/

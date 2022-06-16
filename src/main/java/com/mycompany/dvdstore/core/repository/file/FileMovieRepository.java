@@ -7,7 +7,10 @@ import org.springframework.stereotype.Repository;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.StreamSupport;
 
 // @Repository
 public class FileMovieRepository implements MovieRepositoryInterface {
@@ -23,9 +26,9 @@ public class FileMovieRepository implements MovieRepositoryInterface {
         this.file = file;
     }
 
-    public Movie add(Movie movie) {
+    public Movie save(Movie movie) {
         try {
-            long lastId=list().stream().map(Movie::getId).max(Long::compare).orElse(0L);
+            long lastId= StreamSupport.stream(findAll().spliterator(), false).map(Movie::getId).max(Long::compare).orElse(0L);
             movie.setId(lastId+1);
             Writer output;
             output = new BufferedWriter(new FileWriter(file, true));
@@ -40,7 +43,7 @@ public class FileMovieRepository implements MovieRepositoryInterface {
     }
 
     @Override
-    public List<Movie> list() {
+    public Iterable<Movie> findAll() {
 
         List<Movie> movies=new ArrayList<>();
 
@@ -63,7 +66,7 @@ public class FileMovieRepository implements MovieRepositoryInterface {
     }
 
     @Override
-    public Movie getById(Long id) {
+    public Optional<Movie> findById(Long id) {
         final Movie movie = new Movie();
         movie.setId(id);
         try(BufferedReader br = new BufferedReader(new FileReader(file))) {
@@ -75,7 +78,7 @@ public class FileMovieRepository implements MovieRepositoryInterface {
                     movie.setTitle(allProperties[1]);
                     movie.setGenre(allProperties[2]);
                     movie.setDescription(allProperties[3]);
-                    return movie;
+                    return Optional.of(movie);
                 }
             }
         } catch (FileNotFoundException e) {
@@ -89,6 +92,56 @@ public class FileMovieRepository implements MovieRepositoryInterface {
         movie.setTitle("UNKNOWN");
         movie.setGenre("UNKNOWN");
         movie.setDescription("UNKNOWN");
-        return movie;
+        return Optional.of(movie);
+    }
+
+    @Override
+    public <S extends Movie> Iterable<S> saveAll(Iterable<S> entities) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean existsById(Long aLong) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Iterable<Movie> findAllById(Iterable<Long> longs) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public long count() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void deleteById(Long aLong) {
+        throw new UnsupportedOperationException();
+
+    }
+
+    @Override
+    public void delete(Movie entity) {
+        throw new UnsupportedOperationException();
+
+    }
+
+    @Override
+    public void deleteAllById(Iterable<? extends Long> longs) {
+        throw new UnsupportedOperationException();
+
+    }
+
+    @Override
+    public void deleteAll(Iterable<? extends Movie> entities) {
+        throw new UnsupportedOperationException();
+
+    }
+
+    @Override
+    public void deleteAll() {
+        throw new UnsupportedOperationException();
+
     }
 }
