@@ -23,7 +23,7 @@ public class FileMovieRepository implements MovieRepositoryInterface {
         this.file = file;
     }
 
-    public void add(Movie movie) {
+    public Movie add(Movie movie) {
         try {
             long lastId=list().stream().map(Movie::getId).max(Long::compare).orElse(0L);
             movie.setId(lastId+1);
@@ -32,8 +32,10 @@ public class FileMovieRepository implements MovieRepositoryInterface {
             output.append(movie.getId() + ";" + movie.getTitle() + ";" + movie.getGenre() + ";" + movie.getDescription() + "\n");
             output.flush();
             output.close();
+            return movie;
         } catch (IOException e) {
             e.printStackTrace();
+            return null;
         }
     }
 

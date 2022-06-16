@@ -7,5 +7,5 @@ import java.util.List;
 public interface MovieRepositoryInterface {
     List<Movie> list();
     Movie getById(Long id);
-    void add(Movie movie);
+    Movie add(Movie movie);
 }
